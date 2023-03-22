@@ -10,6 +10,10 @@ public class MainController {
     @GetMapping("/sbb")
     @ResponseBody
     public String index(){
-        return "gddddd333rd3333rrrddfffddfdfdfdd";
+        return "안녕하세요 질문게시판에 오신걸 환영합니다";
+    }
+    @GetMapping("/")
+    public String root(){
+        return "redirect:/question/list";
     }
 }
