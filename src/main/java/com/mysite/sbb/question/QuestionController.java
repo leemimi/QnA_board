@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
+import com.mysite.sbb.answer.AnswerForm;
 import java.util.List;
 
     @Controller
@@ -30,7 +31,7 @@ import java.util.List;
         }
 
         @GetMapping("/detail/{id}")
-        public String detail(Model model, @PathVariable("id") Integer id) {
+        public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
             Question question = questionService.getQuestion(id);
 
             model.addAttribute("question", question);
