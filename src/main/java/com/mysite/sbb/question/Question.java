@@ -2,6 +2,7 @@ package com.mysite.sbb.question;
 
 
 import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Question {
     private String content;
 
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.REMOVE)
     private List<Answer> answerList=new ArrayList<>();
@@ -32,4 +34,6 @@ public class Question {
         answerList.add(a);
 
     }
+    @ManyToOne //여러개의 질문이 한개의 사용자에게 작성 될 수 있다
+    private SiteUser author;
 }

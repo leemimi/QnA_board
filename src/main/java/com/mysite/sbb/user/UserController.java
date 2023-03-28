@@ -40,6 +40,11 @@ public class UserController {
         bindingResult.reject("signupFaild",e.getMessage());
         return "signup_form";
     }
+
     return "redirect:/";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login_form";
     }
 }

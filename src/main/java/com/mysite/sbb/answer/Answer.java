@@ -3,6 +3,7 @@ package com.mysite.sbb.answer;
 import java.time.LocalDateTime;
 
 import com.mysite.sbb.question.Question;
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -20,9 +21,10 @@ public class Answer {
     private String content;
 
     private LocalDateTime createDate;
-
+    private LocalDateTime modifyDate;
     @ManyToOne
     private Question question;
 
-
+    @ManyToOne
+    private SiteUser author;
 }
