@@ -2,6 +2,7 @@ package com.mysite.sbb.question;
 
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.user.SiteUser;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,11 +29,12 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    private Specification<Question> search(String kw) {
+    private Specification<Question> search (String kw) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;
+
             @Override
-            public Predicate toPredicate(Root<Question> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
+            public Predicate toPredicate (Root<Question> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true);  // 중복을 제거
                 Join<Question, SiteUser> u1 = q.join("author", JoinType.LEFT);
                 Join<Question, Answer> a = q.join("answerList", JoinType.LEFT);
@@ -46,15 +48,22 @@ public class QuestionService {
         };
     }
 
-    public List<Question> getList(){
+    public List<Question> getList () {
         return this.questionRepository.findAll();
     }
-    public Question getQuestion(Integer id) {
+
+    public Question getQuestion (Integer id) {
         Optional<Question> oq = questionRepository.findById(id);
 
-        if (oq.isPresent() == false) throw new DataNotFoundException("question not found");
-
+        if (oq.isPresent() == false) {
+            throw new DataNotFoundException("question not found");
+        }
+//        else{
+//        Question question = oq.get();
+//        question.setViewCount(question.getViewCount()+1);
+//        this.questionRepository.save(question);
         return oq.get();
+
     }
     public void create(String subject, String content, SiteUser user) {
         Question q = new Question();
@@ -84,4 +93,7 @@ public class QuestionService {
         question.getVoter().add(siteUser);
         this.questionRepository.save(question);
     }
+
 }
+
+
